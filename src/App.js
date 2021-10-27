@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { Container } from 'react-bootstrap'
+import CountryDropdown from './components/country_dropdown'
+import UserList from './components/user_list'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
+  const user_list = [
+    { name: 'User A', country_code: 'BR'},
+    { name: 'User B', country_code: 'BR'},
+    { name: 'User C', country_code: 'US'},
+    { name: 'User D', country_code: 'DE'},
+    { name: 'User F', country_code: 'DE'},
+  ]
+  const [filteredUser, setFilteredUser] = useState(user_list)
+  function changeList(country_code) {
+    setFilteredUser(user_list.filter(user => user.country_code === country_code))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container className='mt-md-5'>
+        <CountryDropdown changeList={changeList} />
+        <UserList users={filteredUser} />
+      </Container>
     </div>
   );
 }
